@@ -2,6 +2,8 @@ import cv2
 from matplotlib import pyplot as plt
 from constants.constant import Images
 
+# 2) отобразить гистограммы всех трех цветовых каналов изображения;
+
 
 def show_three_channel_hist(image):
     image = cv2.imread(image)

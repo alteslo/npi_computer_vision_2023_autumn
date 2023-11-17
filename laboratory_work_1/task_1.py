@@ -1,6 +1,8 @@
 import cv2
 from constants.constant import Images
 
+# 1) загрузить цветное изображение из заданного файла и показать его на экране;
+
 
 def show_image(image):
     image = cv2.imread(image)
