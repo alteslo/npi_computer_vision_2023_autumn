@@ -1,5 +1,5 @@
 import cv2
-from constants.constant import Images
+from constants.constant import Images, RGB
 
 # 3) перемещая курсор мыши поверх изображения, для текущего пикселя показать:
 #    а) значение цвета пикселя в формате RGB;
@@ -11,42 +11,31 @@ def move_event(event, x, y, flags, params):
     imgk = img.copy()
     # checking for right mouse clicks
     if event == cv2.EVENT_MOUSEMOVE:
-
-        # displaying the coordinates
-        # on the Shell
-        # print(x, ' ', y)
-
-        # displaying the coordinates
-        # on the image window
         font = cv2.FONT_HERSHEY_SIMPLEX
         org = (x, y)
         B = imgk[y, x, 0]
         G = imgk[y, x, 1]
         R = imgk[y, x, 2]
 
-    cv2.putText(imgk, f'(x, y)=({x}, {y})', org, font, 1, (255, 255, 255), 1, cv2.LINE_8)
-    cv2.putText(imgk, '                  ,R={}'.format(R),
-                org, font, 1, (0, 0, 255), 1, cv2.LINE_8)
-    cv2.putText(imgk, '                         ,G={}'.format(G),
-                org, font, 1, (0, 255, 0), 1, cv2.LINE_8)
-    cv2.putText(imgk, '                                 ,B={}'.format(
-        B), org, font, 1, (255, 0, 0), 1, cv2.LINE_8)
-    cv2.imshow('image', imgk)
+        coordinate = f'(x, y)=({x}, {y})'
+        red_value = ' '*(len(coordinate) + 1) + f', R={R}'
+        green_value = ' '*(len(red_value) + 1) + f', G={G}'
+        blue_value = ' '*(len(green_value) + 1) + f', B={B}'
+
+        cv2.putText(imgk, coordinate, org, font, 0.35, RGB.WHITE, 1, cv2.LINE_8)
+
+        cv2.putText(imgk, red_value, org, font, 0.35, RGB.RED, 1, cv2.LINE_8)
+        cv2.putText(imgk, green_value, org, font, 0.35, RGB.GREEN, 1, cv2.LINE_8)
+        cv2.putText(imgk, blue_value, org, font, 0.35, RGB.BLUE, 1, cv2.LINE_8)
+
+        cv2.imshow('image', imgk)
 
 
 # reading the image
 img = cv2.imread(Images.IMAGE_1)
-
-# displaying the image
 cv2.namedWindow("image", cv2.WINDOW_NORMAL)
 cv2.imshow('image', img)
-
-# setting mouse hadler for the image
-# and calling the click_event() function
 cv2.setMouseCallback('image', move_event)
 
-# wait for a key to be pressed to exit
 cv2.waitKey(0)
-
-# close the window
 cv2.destroyAllWindows()
