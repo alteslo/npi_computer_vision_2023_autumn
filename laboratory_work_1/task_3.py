@@ -8,34 +8,45 @@ from constants.constant import Images, RGB
 
 
 def move_event(event, x, y, flags, params):
+    """Обработчик передвижения мышки"""
     imgk = img.copy()
-    # checking for right mouse clicks
+    hsv_img = cv2.cvtColor(imgk, cv2.COLOR_BGR2HSV)
     if event == cv2.EVENT_MOUSEMOVE:
         font = cv2.FONT_HERSHEY_SIMPLEX
         org = (x, y)
+
+        # Получение значения пикселя в формате RGB
         B = imgk[y, x, 0]
         G = imgk[y, x, 1]
         R = imgk[y, x, 2]
 
+        # Получение значения пикселя в формате HSV
+        H = hsv_img.item(x, y, 0)
+        S = hsv_img.item(x, y, 1)
+        V = hsv_img.item(x, y, 2)
+
+        # Интенсивность пикселя
+        intensity = (int(R) + int(G) + int(B)) // 3
+
         coordinate = f'(x, y)=({x}, {y})'
-        red_value = ' '*(len(coordinate) + 1) + f', R={R}'
-        green_value = ' '*(len(red_value) + 1) + f', G={G}'
-        blue_value = ' '*(len(green_value) + 1) + f', B={B}'
+        rgb_value = ' '*(len(coordinate) + 1) + f', RGB=({R},{G},{B})'
+        hsv_value = ' '*(len(rgb_value) + 1) + f', HSV=({H},{S},{V})'
+        intensity_value = ' '*(len(hsv_value) + 1) + f', Intensity={intensity}'
 
         cv2.putText(imgk, coordinate, org, font, 0.35, RGB.WHITE, 1, cv2.LINE_8)
 
-        cv2.putText(imgk, red_value, org, font, 0.35, RGB.RED, 1, cv2.LINE_8)
-        cv2.putText(imgk, green_value, org, font, 0.35, RGB.GREEN, 1, cv2.LINE_8)
-        cv2.putText(imgk, blue_value, org, font, 0.35, RGB.BLUE, 1, cv2.LINE_8)
+        cv2.putText(imgk, rgb_value, org, font, 0.35, RGB.RED, 1, cv2.LINE_8)
+        cv2.putText(imgk, hsv_value, org, font, 0.35, RGB.GREEN, 1, cv2.LINE_8)
+        cv2.putText(imgk, intensity_value, org, font, 0.35, RGB.BLUE, 1, cv2.LINE_8)
 
         cv2.imshow('image', imgk)
 
 
-# reading the image
-img = cv2.imread(Images.IMAGE_1)
-cv2.namedWindow("image", cv2.WINDOW_NORMAL)
-cv2.imshow('image', img)
-cv2.setMouseCallback('image', move_event)
+if __name__ == '__main__':
+    img = cv2.imread(Images.IMAGE_1)
+    cv2.namedWindow("image", cv2.WINDOW_NORMAL)
+    cv2.imshow('image', img)
+    cv2.setMouseCallback('image', move_event)
 
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
