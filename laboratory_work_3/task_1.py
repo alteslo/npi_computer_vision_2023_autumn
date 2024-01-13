@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 from constants.constant import Images
 
+# https://docs.opencv.org/3.4/d9/db0/tutorial_hough_lines.html
 
 def show_image(image):
     image = cv2.imread(image)
@@ -13,7 +14,7 @@ def show_image(image):
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
 
     # применить алгоритм Canny для обнаружения границ на изображении
-    edges = cv2.Canny(blurred, 50, 150, apertureSize=3)
+    edges = cv2.Canny(blurred, 70, 250, apertureSize=3)
 
     # применить преобразование Хафа для поиска линий и окружностей на изображении
     circles = cv2.HoughCircles(edges, cv2.HOUGH_GRADIENT, 1, 20,
