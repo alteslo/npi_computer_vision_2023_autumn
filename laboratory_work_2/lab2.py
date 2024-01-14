@@ -5,6 +5,7 @@ import numpy as np
 
 
 def show_hists(image, alpha, beta, gamma):
+    plt.figure(figsize=(20, 10))
 
     # выполнить линейное преобразование
     transformed_linear = cv2.convertScaleAbs(image, alpha=alpha, beta=beta)
@@ -43,8 +44,6 @@ def show_hists(image, alpha, beta, gamma):
     sharpened_image = cv2.filter2D(image, -1, kernel_sharpening)
 
     colors = ('b', 'g', 'r')
-
-    plt.figure(figsize=(20, 10))
 
     # стандартное изображение
     plt.subplot(341)
