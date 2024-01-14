@@ -3,16 +3,14 @@ from constants.constant import Images
 import numpy as np
 
 
-# Бинаризация ОЦУ
-
 def show_image(image):
     image = cv2.imread(image)
     assert image is not None, "file could not be read"
 
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # Бинаризация ОЦУ
 
-    _, thresh = cv2.threshold(
-        gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    _, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
     kernel = np.ones((5, 5), np.uint8)
     opening = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel, iterations=2)  # Удаляем мелкие шумовые объекты
     num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(

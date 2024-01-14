@@ -28,23 +28,16 @@ def show_pixel_info(image):
             intensity = (int(R) + int(G) + int(B)) // 3
 
             coordinate = f'(x, y)=({x}, {y})'
-            rgb_value = ' '*(len(coordinate) + 1) + \
-                f', RGB=({R}, {G}, {B})'
-            hsv_value = ' '*(len(rgb_value) + 1) + \
-                f', HSV=({H}, {S}, {V})'
-            intensity_value = ' '*(len(hsv_value) + 2) + \
-                f', Intensity={intensity}'
+            rgb_value = ' '*(len(coordinate) + 1) + f', RGB=({R}, {G}, {B})'
+            hsv_value = ' '*(len(rgb_value) + 1) + f', HSV=({H}, {S}, {V})'
+            intensity_value = ' '*(len(hsv_value) + 2) + f', Intensity={intensity}'
 
             org1 = (x+20, y)
-            cv2.putText(imgk, coordinate, org1, font,
-                        0.35, RGB.WHITE, 1, cv2.LINE_8)
+            cv2.putText(imgk, coordinate, org1, font, 0.35, RGB.WHITE, 1, cv2.LINE_8)
 
-            cv2.putText(imgk, rgb_value, org1, font,
-                        0.35, RGB.RED, 1, cv2.LINE_8)
-            cv2.putText(imgk, hsv_value, org1, font,
-                        0.35, RGB.GREEN, 1, cv2.LINE_8)
-            cv2.putText(imgk, intensity_value, org1, font,
-                        0.35, RGB.BLUE, 1, cv2.LINE_8)
+            cv2.putText(imgk, rgb_value, org1, font, 0.35, RGB.RED, 1, cv2.LINE_8)
+            cv2.putText(imgk, hsv_value, org1, font, 0.35, RGB.GREEN, 1, cv2.LINE_8)
+            cv2.putText(imgk, intensity_value, org1, font, 0.35, RGB.BLUE, 1, cv2.LINE_8)
 
             # Вырезаем окно размером 25х25 с центром в текущем пикселе
             window = cv2.getRectSubPix(imgk, (25, 25), org)
