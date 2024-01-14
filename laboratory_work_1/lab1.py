@@ -35,33 +35,34 @@ def show_pixel_info(image):
             intensity_value = ' '*(len(hsv_value) + 2) + \
                 f', Intensity={intensity}'
 
-            cv2.putText(imgk, coordinate, org, font,
+            org1 = (x+20, y)
+            cv2.putText(imgk, coordinate, org1, font,
                         0.35, RGB.WHITE, 1, cv2.LINE_8)
 
-            cv2.putText(imgk, rgb_value, org, font,
+            cv2.putText(imgk, rgb_value, org1, font,
                         0.35, RGB.RED, 1, cv2.LINE_8)
-            cv2.putText(imgk, hsv_value, org, font,
+            cv2.putText(imgk, hsv_value, org1, font,
                         0.35, RGB.GREEN, 1, cv2.LINE_8)
-            cv2.putText(imgk, intensity_value, org, font,
+            cv2.putText(imgk, intensity_value, org1, font,
                         0.35, RGB.BLUE, 1, cv2.LINE_8)
 
             # Вырезаем окно размером 25х25 с центром в текущем пикселе
-            window = cv2.getRectSubPix(imgk, (25, 25), (x, y))
+            window = cv2.getRectSubPix(imgk, (25, 25), org)
 
             # Вычисляем среднее значение и стандартное отклонение по каждой компоненте цвета
             mean, std_dev = cv2.meanStdDev(window)
             mean_b, mean_g, mean_r = mean.flatten()
             std_dev_b, std_dev_g, std_dev_r = std_dev.flatten()
 
-            mean_values = f', Mean RGB=({round(mean_r, 2)}, {round(mean_g, 2)}, {round(mean_b, 2)})'
-            std_dev_values = ' ' * \
-                (len(mean_values) + 3) + \
-                f', Std Dev RGB=({round(std_dev_r)},{round(std_dev_g)},{round(std_dev_b)})'
+            mean_values = f', Mean RGB=({round(mean_r, 2)},{round(mean_g, 2)},{round(mean_b, 2)})'
+            std_dev_values = ' ' * (len(mean_values) + 3) + f', Std Dev RGB=({round(std_dev_r)},{round(std_dev_g)},{round(std_dev_b)})'
 
-            cv2.putText(window, mean_values, (5, 15), font,
-                        0.1, RGB.WHITE, 1, cv2.LINE_8)
-            cv2.putText(window, std_dev_values, (5, 30), font,
-                        0.1, RGB.GREEN, 1, cv2.LINE_8)
+            org2 = (x+20, y+20)
+
+            cv2.putText(imgk, mean_values, org2, font,
+                        0.35, RGB.WHITE, 1, cv2.LINE_8)
+            cv2.putText(imgk, std_dev_values, org2, font,
+                        0.35, RGB.GREEN, 1, cv2.LINE_8)
 
             cv2.imshow('Window', window)
             cv2.imshow('Image', imgk)
