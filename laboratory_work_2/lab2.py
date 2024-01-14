@@ -23,7 +23,8 @@ def show_hists(image, alpha, beta, gamma):
     gauss_noise_image = cv2.cvtColor(gauss_noise_image, cv2.COLOR_HSV2BGR)  # И обратно в bgr
 
     # добавить шум соль и перец
-    salt_and_pepper_noise = np.zeros(shape=image.shape, dtype=np.uint8)
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    salt_and_pepper_noise = np.zeros(shape=gray.shape, dtype=np.uint8)
     cv2.randu(salt_and_pepper_noise, 0, 255)
     salt = salt_and_pepper_noise > 250
     pepper = salt_and_pepper_noise < 5
